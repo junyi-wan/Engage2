@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeschaert Engage - Advanced Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #F6F9FF; color: #1e293b; overflow: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .purple-grad { background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%); }
+        .sidebar-active { background: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3); }
+        
+        /* 模拟碎片化信息滚动流 */
+        .news-stream { height: 400px; overflow-y: hidden; position: relative; }
+        .news-inner { animation: scrollUp 40s linear infinite; }
+        @keyframes scrollUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+        
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .highlight-text { color: #4f46e5; font-weight: 700; background: #f0f4ff; padding: 2px 4px; border-radius: 4px; }
+        
+        .loader-bar { height: 4px; background: #e2e8f0; position: relative; overflow: hidden; border-radius: 2px; }
+        .loader-fill { height: 100%; background: #6366f1; width: 0; transition: width 2s ease-in-out; }
+    </style>
+</head>
+<body class="flex h-screen">
+
+    <aside class="w-20 bg-white border-r border-indigo-50 flex flex-col items-center py-8 space-y-8 z-30">
+        <div class="w-10 h-10 bg-indigo-700 rounded-xl flex items-center justify-center text-white font-bold">M</div>
+        <nav class="flex flex-col space-y-6">
+            <div class="p-3 rounded-xl sidebar-active"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-11.7 8.38 8.38 0 0 1 3.8.9L21 3z"/></svg></div>
+            <div class="p-3 rounded-xl text-slate-400 hover:bg-indigo-50 cursor-pointer"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-20 px-10 flex items-center justify-between border-b border-indigo-50 bg-white/50 backdrop-blur-md">
+            <div>
+                <h1 class="text-xl font-extrabold text-slate-800 uppercase tracking-tighter italic">Engage Intelligence Workplace</h1>
+                <p class="text-[10px] font-bold text-slate-400">MONITORING: DAVID MILLER & GLOBAL TECH SECTOR</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full uppercase">Private Wealth Manager Mode</span>
+                <div class="w-10 h-10 rounded-full bg-slate-200 border-2 border-white shadow-sm overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="avatar">
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-hidden grid grid-cols-12">
+            
+            <div class="col-span-3 border-r border-indigo-50 bg-slate-50/50 p-6 flex flex-col">
+                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6">Real-time Scraping Stream</h3>
+                <div class="news-stream flex-1">
+                    <div id="scraped-content" class="news-inner space-y-4">
+                        <div class="p-3 bg-white rounded-xl border border-slate-100 text-[11px] shadow-sm">
+                            <span class="text-blue-500 font-bold">[LinkedIn]</span> David Miller liked: "The Future of AI in Fintech IPOs"
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-slate-100 text-[11px] shadow-sm">
+                            <span class="text-emerald-500 font-bold">[Personal Web]</span> Added Portfolio section: "Focusing on Tech Equities"
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-slate-100 text-[11px] shadow-sm">
+                            <span class="text-orange-500 font-bold">[Company News]</span> TechFoundry reports 35% growth in Q3.
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-slate-100 text-[11px] shadow-sm">
+                            <span class="text-indigo-500 font-bold">[News]</span> David Miller mentioned in Forbes: "Top Tech Entrepreneurs of 2024"
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-slate-100 text-[11px] shadow-sm">
+                            <span class="text-red-500 font-bold">[Twitter]</span> "Excited about the Apple Beats Earnings report!"
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-slate-100 text-[11px] shadow-sm">
+                            <span class="text-blue-500 font-bold">[LinkedIn]</span> David Miller updated bio: "Seeking new investment opportunities"
+                        </div>
+                    </div>
+                </div>
+                <button onclick="startSynchronization()" id="sync-btn" class="mt-6 w-full py-4 purple-grad text-white rounded-2xl font-black text-xs tracking-widest hover:scale-[1.02] transition-all shadow-lg">
+                    SYNCHRONIZE TO DATABASE
+                </button>
+            </div>
+
+            <div class="col-span-9 p-8 overflow-y-auto bg-white">
+                
+                <div id="step-analysis" class="hidden space-y-8 fade-in">
+                    <div class="flex items-center space-x-6">
+                        <div class="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-200">DM</div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800">David Miller</h2>
+                            <p class="text-indigo-600 font-bold text-sm">$9,415,230 • Qualified Lead Identified</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative overflow-hidden group hover:bg-white hover:shadow-xl transition-all">
+                            <div class="absolute -right-4 -top-4 text-slate-100 opacity-20 group-hover:text-indigo-100 transition-colors">
+                                <svg width="80" height="80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            </div>
+                            <p class="text-[10px] font-black text-indigo-500 tracking-widest mb-3 uppercase">Priority Interest #1</p>
+                            <h4 class="font-bold text-slate-800 leading-tight">Liquidity Event Planning</h4>
+                            <p class="text-[10px] text-slate-400 mt-2">Predicted based on TechFoundry growth patterns.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative overflow-hidden group hover:bg-white hover:shadow-xl transition-all">
+                            <p class="text-[10px] font-black text-emerald-500 tracking-widest mb-3 uppercase">Priority Interest #2</p>
+                            <h4 class="font-bold text-slate-800 leading-tight">Portfolio Diversification</h4>
+                            <p class="text-[10px] text-slate-400 mt-2">Matched with interest in Apple/UBS earnings news.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative overflow-hidden group hover:bg-white hover:shadow-xl transition-all">
+                            <p class="text-[10px] font-black text-orange-500 tracking-widest mb-3 uppercase">Priority Interest #3</p>
+                            <h4 class="font-bold text-slate-800 leading-tight">Market Outlook</h4>
+                            <p class="text-[10px] text-slate-400 mt-2">Linked to recent engagement with Fintech news.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50/50 p-8 rounded-[2.5rem] border border-indigo-100 relative">
+                        <h3 class="text-xs font-black text-indigo-400 uppercase tracking-widest mb-6">Prospectus Briefing (System Generated)</h3>
+                        <div class="prose prose-sm text-slate-700 space-y-4">
+                            <p><strong>Context:</strong> David has shown significant engagement with the tech sector recently, specifically focusing on <span class="highlight-text">high-growth equity momentum</span>. His recent LinkedIn activity indicates he is evaluating exits for TechFoundry.</p>
+                            <p><strong>Proposed Action:</strong> Introduce our <strong>Tail Risk Hedging strategies</strong> as he might be over-exposed to the Apple Inc. momentum (+3.3% recent gain).</p>
+                        </div>
+                        <button onclick="generateDraft()" id="btn-draft" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full font-bold text-sm shadow-lg hover:bg-indigo-700 transition-all">
+                            Generate Personalized Cold Email
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-draft" class="hidden space-y-6 fade-in pb-20">
+                    <div class="bg-white rounded-3xl p-8 border-2 border-indigo-50 shadow-2xl relative">
+                        <div class="absolute -top-3 left-8 bg-indigo-600 text-white px-4 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Drafting Support</div>
+                        
+                        <div class="space-y-6 text-slate-800 leading-relaxed">
+                            <p>Dear David,</p>
+                            <p>I have been following <b>TechFoundry's impressive trajectory</b> lately, and I was particularly struck by your recent insights regarding the <b>tech sector's momentum</b>. Congratulations on the growth your team has achieved.</p>
+            
+            <p>Given your leadership role and the current market climate, I suspect that <b>Liquidity Event Planning</b> and <b>efficient Portfolio Diversification</b> might be on your mind as you look toward the next chapter for TechFoundry. Many founders in your position are currently evaluating how to navigate <b>market outlook shifts</b> while protecting their concentrated tech exposure.</p>
+            
+            <p>At Meeschaert, we specialize in <b>Tail Risk Hedging strategies</b> specifically designed for technology entrepreneurs. I would welcome the opportunity to share how we’ve helped peers in your sector secure their legacies during similar growth phases.</p>
+            
+            <p>Would you be open to a brief introductory call next Tuesday or Wednesday?</p>
+            
+            <p>Best regards,<br>
+            <span class="text-indigo-600 font-bold">[Manager Name]</span><br>
+            Private Wealth Manager, Meeschaert</p>
+                        </div>
+
+                        <div class="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between">
+                            <div class="flex items-center text-[10px] font-bold text-orange-500 uppercase italic">
+                                <svg class="mr-2" width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/></svg>
+                                Awaiting Human Review
+                            </div>
+                            <button onclick="showSuccess()" class="bg-emerald-500 text-white px-10 py-3 rounded-full font-bold text-sm shadow-lg shadow-emerald-100 hover:bg-emerald-600 transition-all">
+                                Review & Approve Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="toast" class="fixed bottom-10 right-10 hidden bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold shadow-2xl fade-in z-50">
+            Email Sent Successfully! Initial contact logged in CRM.
+        </div>
+    </main>
+
+    <script>
+        function startSynchronization() {
+            const btn = document.getElementById('sync-btn');
+            btn.innerText = "SYNCHRONIZING SECURELY...";
+            btn.classList.add('animate-pulse');
+            
+            setTimeout(() => {
+                btn.innerText = "DATABASE SYNCHRONIZED ✓";
+                btn.classList.replace('purple-grad', 'bg-emerald-500');
+                btn.classList.remove('animate-pulse');
+                document.getElementById('step-analysis').classList.remove('hidden');
+                // 平滑滚动到底部
+                document.getElementById('step-analysis').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        }
+
+        function generateDraft() {
+            const btn = document.getElementById('btn-draft');
+            btn.innerText = "WRITING INDIVIDUAL DRAFT...";
+            btn.classList.add('animate-pulse');
+
+            setTimeout(() => {
+                btn.innerText = "DRAFT GENERATED ✓";
+                btn.classList.replace('bg-indigo-600', 'bg-slate-700');
+                document.getElementById('step-draft').classList.remove('hidden');
+                document.getElementById('step-draft').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+
+        function showSuccess() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
